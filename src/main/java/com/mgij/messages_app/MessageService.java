@@ -30,7 +30,19 @@ public class MessageService {
         MessageDAO.deleteMessage(id);
     }
 
-    public static void updateMessage(){
+    public static void updateMessage() throws SQLException {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Write the new message");
+        String message = sc.nextLine();
+
+        System.out.println("What message do you want to update?");
+        int id = sc.nextInt();
+
+        Message row = new Message();
+        row.setId(id);
+        row.setMessage(message);
+
+        MessageDAO.updateMessage(row);
 
     }
 }

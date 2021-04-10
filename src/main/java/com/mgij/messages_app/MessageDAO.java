@@ -65,7 +65,24 @@ public class MessageDAO {
         }
     }
 
-    public static void updateMessage(Message message){
-
+    public static void updateMessage(Message message) throws SQLException {
+        MyConnection myConnection = new MyConnection();
+        Connection connection = myConnection.getConnection();
+        try {
+            PreparedStatement ps = null;
+            String query = "UPDATE messages SET message = ?, date = CURRENT_TIMESTAMP WHERE id = ?";
+            ps = connection.prepareStatement(query);
+            ps.setString(1, message.getMessage());
+            ps.setInt(2, message.getId());
+            int countRowsAffected = ps.executeUpdate();
+            if(countRowsAffected > 0){
+                System.out.println("The message has been updated successfully");
+            }else{
+                System.out.println("The message wasn't found");
+            }
+        }catch (SQLException e){
+            System.out.println("The message couldn't be updated");
+            System.out.println(e.getMessage());
+        }
     }
 }
