@@ -2,6 +2,7 @@ package com.mgij.messages_app;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class MessageDAO {
@@ -21,8 +22,26 @@ public class MessageDAO {
         }
     }
 
-    public static void getMessages(){
-
+    public static void getMessages() throws SQLException {
+        MyConnection myConnection = new MyConnection();
+        Connection connection = myConnection.getConnection();
+        try {
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            String query = "SELECT * FROM messages";
+            ps = connection.prepareStatement(query);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                System.out.println("Id: " + rs.getInt("id"));
+                System.out.println("Message: " + rs.getString("message"));
+                System.out.println("Author: " + rs.getString("author"));
+                System.out.println("Date: " + rs.getString("date"));
+                System.out.println("---------");
+            }
+        }catch (SQLException e){
+            System.out.println("Messages not recoverable");
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void deleteMessage(int id){

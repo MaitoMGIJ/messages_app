@@ -19,8 +19,8 @@ public class MessageService {
         MessageDAO.addMessage(row);
     }
 
-    public static void getMessages(){
-
+    public static void getMessages() throws SQLException {
+        MessageDAO.getMessages();
     }
 
     public static void deleteMessage(){
