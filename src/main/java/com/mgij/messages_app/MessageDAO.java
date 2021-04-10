@@ -44,8 +44,25 @@ public class MessageDAO {
         }
     }
 
-    public static void deleteMessage(int id){
+    public static void deleteMessage(int id) throws SQLException {
+        MyConnection myConnection = new MyConnection();
+        Connection connection = myConnection.getConnection();
+        try {
+            PreparedStatement ps = null;
+            String query = "DELETE FROM messages WHERE id = ?";
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            int countRowsAffected = ps.executeUpdate();
+            if(countRowsAffected > 0){
+                System.out.println("The message has been deleted successfully");
+            }else{
+                System.out.println("The message wasn't found");
+            }
 
+        }catch (SQLException e){
+            System.out.println("The message couldn't be deleted");
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void updateMessage(Message message){

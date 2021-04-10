@@ -23,8 +23,11 @@ public class MessageService {
         MessageDAO.getMessages();
     }
 
-    public static void deleteMessage(){
-
+    public static void deleteMessage() throws SQLException {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("What message do you want to delete?");
+        int id = sc.nextInt();
+        MessageDAO.deleteMessage(id);
     }
 
     public static void updateMessage(){
